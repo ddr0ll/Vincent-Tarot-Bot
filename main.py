@@ -3,6 +3,14 @@ from dotenv import load_dotenv
 import discord
 from discord.ext import commands
 from discord import app_commands
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] (%(name)s) %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S"
+)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 TOKEN = os.getenv('TOKEN')
@@ -21,12 +29,12 @@ class Vincent(commands.Bot):
 
         try:
             synced = await self.tree.sync()
-            print(f'Synced {len(synced)} commands')
+            logger.info(f'Synced {len(synced)} commands')
         except Exception as e:
-            print(f"Error:\n{e}")
+            logger.error(f"Error occurred during sync:\n{e}")
 
     async def on_ready(self):
-        print(f"Logged in as {self.user}")
+        logger.info(f"Logged in as {self.user}")
 
 bot = Vincent()
 
@@ -40,7 +48,7 @@ async def cog_app_command_error(interaction: discord.Interaction, error: app_com
         else:
             await interaction.response.send_message(msg, ephemeral=True)
     else:
-        print(f'the error was: {error}')
+        logger.error(f'Error occurred: {error}')
 
-bot.run(TOKEN)
+bot.run(TOKEN, log_handler=None)
 

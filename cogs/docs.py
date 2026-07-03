@@ -4,7 +4,7 @@ from discord import app_commands
 from discord.ui import LayoutView, Container, TextDisplay, Separator, MediaGallery
 import os
 
-tarot = os.getenv('TAROT')
+tarot = os.getenv('TAROT_COMMAND_ID')
 
 def add_sep(container: Container, spacing="small"):     # Anything except 'large' will be considered Small Spacing
     try:
@@ -24,23 +24,27 @@ class Help(LayoutView):
         container.add_item(gallery)
         add_sep(container)
 
-        text2 = '# Команды:'
+        text1 = '# Команды:'
+        container.add_item(TextDisplay(text1))
+        add_sep(container)
+
+        text2 = f'- </tarot daily:{tarot}>\n**Расклад карт Таро на День в размере Одной Карты**'
         container.add_item(TextDisplay(text2))
         add_sep(container)
 
-        text3 = f'- </tarot day:{tarot}>\n**Расклад карт Таро на День в размере Одной Карты**'
+        text3 = f'- </tarot verdict:{tarot}>\n**Строгое «Да» или «Нет» на основе энергетики Одной Карты**'
         container.add_item(TextDisplay(text3))
         add_sep(container)
 
-        text4 = f'- </tarot one:{tarot}>\n**Расклад Таро в размере Одной Карты**\nВ обязательном поле "message" - введите свой вопрос картам'
+        text4 = f'- </tarot ask:{tarot}>\n**Расклад Таро в размере Одной Карты**\nВ обязательном поле "message" - введите свой вопрос картам'
         container.add_item(TextDisplay(text4))
         add_sep(container)
 
-        text5 = f'- </tarot three:{tarot}>\n**Расклад Таро в размере Трёх Карт**\nВ обязательном поле "message" - введите свой вопрос картам'
+        text5 = f'- </tarot trio:{tarot}>\n**Расклад Таро в размере Трёх Карт**\nВ обязательном поле "message" - введите свой вопрос картам'
         container.add_item(TextDisplay(text5))
         add_sep(container)
 
-        text6 = f'- </tarot relationship:{tarot}>\n**Расклад Таро на Отношения в размере Шести Карт**\nВ обязательном поле "message" - введите свой вопрос картам на тему отношений'
+        text6 = f'- </tarot love:{tarot}>\n**Расклад Таро на Отношения в размере Шести Карт**\nВ обязательном поле "message" - введите свой вопрос картам на тему отношений'
         container.add_item(TextDisplay(text6))
         add_sep(container)
 
