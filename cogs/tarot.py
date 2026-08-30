@@ -430,10 +430,21 @@ class Tarot(commands.Cog):
     # Tarot Bot Commands:
 
     @tarot.command(name="ask", description="1 карта - ответ на любой вопрос!")
-    @app_commands.describe(question='Ваш вопрос к Картам')
+    @app_commands.describe(
+        question="Ваш вопрос к Картам", hide="Выберите, сделать ли ответ публичным"
+    )
+    @app_commands.rename(question="вопрос", hide="скрыть_ответ")
+    @app_commands.choices(
+        hide=[
+            app_commands.Choice(name="Да", value=1),
+            app_commands.Choice(name="Нет", value=0),
+        ]
+    )
     @app_commands.checks.cooldown(1, 20)
-    async def one(self, interaction: discord.Interaction, question: str):
-        await interaction.response.defer()
+    async def one(self, interaction: discord.Interaction, question: str, hide: app_commands.Choice[int] | None = None):
+        hide = hide.value if hide is not None else 0
+        await interaction.response.defer(ephemeral=bool(hide))
+
         spread_type = "one"
         cards = draw_cards(spread_type=spread_type)
         cards_text = description(cards)
@@ -468,10 +479,21 @@ class Tarot(commands.Cog):
         view.message = msg
 
     @tarot.command(name="trio", description="3 карты - ответ на любой вопрос!")
-    @app_commands.describe(question='Ваш вопрос к Картам')
+    @app_commands.describe(
+        question="Ваш вопрос к Картам", hide="Выберите, сделать ли ответ публичным"
+    )
+    @app_commands.rename(question="вопрос", hide="скрыть_ответ")
+    @app_commands.choices(
+        hide=[
+            app_commands.Choice(name="Да", value=1),
+            app_commands.Choice(name="Нет", value=0),
+        ]
+    )
     @app_commands.checks.cooldown(1, 20)
-    async def three(self, interaction: discord.Interaction, question: str):
-        await interaction.response.defer()
+    async def three(self, interaction: discord.Interaction, question: str, hide: app_commands.Choice[int] | None = None):
+        hide = hide.value if hide is not None else 0
+        await interaction.response.defer(ephemeral=bool(hide))
+
         spread_type = "three"
         cards = draw_cards(spread_type=spread_type)
         cards_text = description(cards)
@@ -513,10 +535,21 @@ class Tarot(commands.Cog):
         view.message = msg
 
     @tarot.command(name="love", description="Расклад на отношения - 6 карт")
-    @app_commands.describe(question='Ваш вопрос к Картам')
+    @app_commands.describe(
+        question="Ваш вопрос к Картам", hide="Выберите, сделать ли ответ публичным"
+    )
+    @app_commands.rename(question="вопрос", hide="скрыть_ответ")
+    @app_commands.choices(
+        hide=[
+            app_commands.Choice(name="Да", value=1),
+            app_commands.Choice(name="Нет", value=0),
+        ]
+    )
     @app_commands.checks.cooldown(1, 20)
-    async def relationship(self, interaction: discord.Interaction, question: str):
-        await interaction.response.defer()
+    async def relationship(self, interaction: discord.Interaction, question: str, hide: app_commands.Choice[int] | None = None):
+        hide = hide.value if hide is not None else 0
+        await interaction.response.defer(ephemeral=bool(hide))
+
         spread_type = "relationship"
         cards = draw_cards(spread_type=spread_type)
         cards_text = description(cards)
@@ -558,9 +591,19 @@ class Tarot(commands.Cog):
         view.message = msg
 
     @tarot.command(name="daily", description="Расклад на день ! - 1 карта")
+    @app_commands.describe(hide="Выберите, сделать ли ответ публичным")
+    @app_commands.rename(hide="скрыть_ответ")
+    @app_commands.choices(
+        hide=[
+            app_commands.Choice(name="Да", value=1),
+            app_commands.Choice(name="Нет", value=0),
+        ]
+    )
     @app_commands.checks.cooldown(1, 20)
-    async def day(self, interaction: discord.Interaction):
-        await interaction.response.defer()
+    async def day(self, interaction: discord.Interaction, hide: app_commands.Choice[int] | None = None):
+        hide = hide.value if hide is not None else 0
+        await interaction.response.defer(ephemeral=bool(hide))
+
         spread_type = "day"
         cards = draw_cards(spread_type=spread_type)
         cards_text = description(cards)
@@ -589,10 +632,21 @@ class Tarot(commands.Cog):
         view.message = msg
 
     @tarot.command(name='verdict', description='Четкий ответ, Да или Нет, на основании Одной Выпавшей Карты')
-    @app_commands.describe(question='Ваш вопрос к Картам')
+    @app_commands.describe(
+        question="Ваш вопрос к Картам", hide="Выберите, сделать ли ответ публичным"
+    )
+    @app_commands.rename(question="вопрос", hide="скрыть_ответ")
+    @app_commands.choices(
+        hide=[
+            app_commands.Choice(name="Да", value=1),
+            app_commands.Choice(name="Нет", value=0),
+        ]
+    )
     @app_commands.checks.cooldown(1, 20)
-    async def verdict(self, interaction: discord.Interaction, question: str):
-        await interaction.response.defer()
+    async def verdict(self, interaction: discord.Interaction, question: str, hide: app_commands.Choice[int] | None = None):
+        hide = hide.value if hide is not None else 0
+        await interaction.response.defer(ephemeral=bool(hide))
+
         spread_type = "verdict"
         cards = draw_cards(spread_type=spread_type)
         cards_text = description(cards)

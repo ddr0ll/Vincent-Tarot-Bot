@@ -13,6 +13,7 @@ from tarot_deck import FULL_DECK
 load_dotenv()
 invoke_url = os.getenv("INVOKE_URL")
 AUTHORIZATION = os.getenv('AUTHORIZATION')
+reasoning_lvl = str(os.getenv('REASONING_LVL'))
 stream = False
 
 headers = {
@@ -122,12 +123,23 @@ async def llm_answer_day(spread_type: str, cards_text: str):
                 '''
 
     payload = {
-        "model": "moonshotai/kimi-k2.6",
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": prompt
+                    },
+                ]
+            }
+        ],
+        "model": "moonshotai/kimi-k3",
         "max_tokens": 16384,
-        "temperature": 1.00,
-        "top_p": 1.00,
-        "stream": stream
+        "seed": 0,
+        "stream": stream,
+        "temperature": 1,
+        "reasoning_effort": reasoning_lvl
     }
 
     async with aiohttp.ClientSession() as session:
@@ -172,12 +184,23 @@ async def llm_answer_yesno(question: str, spread_type: str, cards_text: str):
                 '''
 
     payload = {
-        "model": "moonshotai/kimi-k2.6",
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": prompt
+                    },
+                ]
+            }
+        ],
+        "model": "moonshotai/kimi-k3",
         "max_tokens": 16384,
-        "temperature": 1.00,
-        "top_p": 1.00,
-        "stream": stream
+        "seed": 0,
+        "stream": stream,
+        "temperature": 1,
+        "reasoning_effort": reasoning_lvl
     }
 
     async with aiohttp.ClientSession() as session:
@@ -224,12 +247,23 @@ async def llm_answer(question: str, spread_type: str, cards_text: str):
                     '''
 
     payload = {
-        "model": "moonshotai/kimi-k2.6",
-        "messages": [{"role": "user", "content": prompt}],
+        "messages": [
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": prompt
+                    },
+                ]
+            }
+        ],
+        "model": "moonshotai/kimi-k3",
         "max_tokens": 16384,
-        "temperature": 1.00,
-        "top_p": 1.00,
-        "stream": stream
+        "seed": 0,
+        "stream": stream,
+        "temperature": 1,
+        "reasoning_effort": reasoning_lvl
     }
 
     async with aiohttp.ClientSession() as session:
